@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         EventQueue.invokeLater(() -> {
-            AlgoFrame frame = new AlgoFrame("Welcome");
+            AlgoFrame frame = new AlgoFrame("Welcome", 500, 500);
         });
     }
 }
