@@ -19,13 +19,13 @@ public class AlgoFrame extends JFrame {
         AlgoCanvas canvas = new AlgoCanvas();
         // 画布
         setContentPane(canvas);
-        pack();
-
-        setVisible(true);
-        // 关闭退出程序
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // resize
         setResizable(false);
+        pack();
+
+        // 关闭退出程序
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
     }
 
     public AlgoFrame(String title) throws HeadlessException {
@@ -33,11 +33,9 @@ public class AlgoFrame extends JFrame {
     }
 
     private Circle[] circles;
-    public void render(Circle[] circles, boolean isAnimated) {
+    public void render(Circle[] circles) {
         this.circles = circles;
-        if (isAnimated) {
-            repaint();
-        }
+        repaint();
     }
 
     private class AlgoCanvas extends JPanel {
@@ -61,9 +59,14 @@ public class AlgoFrame extends JFrame {
 
             // 设置笔画宽度
             AlgoVisHelper.setStrokeWidth(g2d, 1);
-            AlgoVisHelper.setColor(g2d, Color.BLUE);
             for (Circle circle : circles) {
-                AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                if (!circle.isFilled) {
+                    AlgoVisHelper.setColor(g2d, Color.RED);
+                    AlgoVisHelper.fillCircle(g2d, circle.x, circle.y, circle.getR());
+                } else {
+                    AlgoVisHelper.setColor(g2d, Color.BLUE);
+                    AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+                }
             }
 
         }

@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class AlgoVisualizer {
 
@@ -25,6 +23,7 @@ public class AlgoVisualizer {
             frame = new AlgoFrame("Welcome", sceneWidth, sceneHeight);
             new Thread(() -> {
                 frame.addKeyListener(new algoKeyListener());
+                frame.addMouseListener(new algoMouseListener());
                 run();
             }).start();
         });
@@ -33,10 +32,12 @@ public class AlgoVisualizer {
     private void run() {
         for (; ; ) {
             // 绘制数据
-            frame.render(circles, isAnimated);
+            frame.render(circles);
             AlgoVisHelper.sleep(20);
-            for (Circle circle : circles) {
-                circle.move(0, 0, frame.getCavasWidth(), frame.getCavasHeight());
+            if (isAnimated) {
+                for (Circle circle : circles) {
+                    circle.move(0, 0, frame.getCavasWidth(), frame.getCavasHeight());
+                }
             }
         }
     }
@@ -45,11 +46,28 @@ public class AlgoVisualizer {
      * 键盘事件
      */
     private class algoKeyListener extends KeyAdapter {
- 
+
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyChar() == ' ') {
                 isAnimated = !isAnimated;
+            }
+        }
+    }
+
+    /**
+     * 键盘事件
+     */
+    private class algoMouseListener extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            e.translatePoint(-3, -(frame.getBounds().height - frame.getCavasHeight()) + 3);
+            System.out.println(e.getPoint());
+            for (Circle circle : circles) {
+                if (circle.contains(e.getPoint())) {
+                    circle.isFilled = !circle.isFilled;
+                }
             }
         }
     }
