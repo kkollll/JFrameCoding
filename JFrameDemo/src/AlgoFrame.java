@@ -32,6 +32,12 @@ public class AlgoFrame extends JFrame {
         this(title, screen.width, screen.height);
     }
 
+    private Circle[] circles;
+    public void render(Circle[] circles) {
+        this.circles = circles;
+        repaint();
+    }
+
     private class AlgoCanvas extends JPanel {
 
         public AlgoCanvas() {
@@ -49,17 +55,15 @@ public class AlgoFrame extends JFrame {
             RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,
                     RenderingHints.VALUE_ANTIALIAS_ON);
 
+            g2d.addRenderingHints(hints);
+
             // 设置笔画宽度
-            AlgoVisHelper.setStrokeWidth(g2d, 20);
+            AlgoVisHelper.setStrokeWidth(g2d, 1);
+            AlgoVisHelper.setColor(g2d, Color.BLUE);
+            for (Circle circle : circles) {
+                AlgoVisHelper.strokeCircle(g2d, circle.x, circle.y, circle.getR());
+            }
 
-            // 设置颜色
-            AlgoVisHelper.setColor(g2d, Color.GREEN);
-            // 设置一个圆
-            AlgoVisHelper.fillCircle(g2d, cavasWidth / 2, cavasHeight / 2, 200);
-
-            // 第二个圆
-            AlgoVisHelper.setColor(g2d, Color.RED);
-            AlgoVisHelper.strokeCircle(g2d, cavasWidth / 2, cavasHeight / 2, 200);
         }
 
         @Override

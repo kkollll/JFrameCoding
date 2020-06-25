@@ -25,4 +25,12 @@ public class AlgoVisHelper {
     public static void setColor(Graphics2D g2d, Color color) {
         g2d.setColor(color);
     }
+
+    public static void sleep(int t) {
+        try {
+            Thread.sleep(20);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
