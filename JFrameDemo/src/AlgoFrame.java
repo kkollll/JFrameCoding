@@ -1,6 +1,8 @@
 import lombok.Getter;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 @Getter
 public class AlgoFrame extends JFrame {
@@ -14,12 +16,15 @@ public class AlgoFrame extends JFrame {
         this.cavasWidth = cavasWidth;
         this.cavasHeight = cavasHeight;
         AlgoCanvas canvas = new AlgoCanvas();
+        // 画布
         setContentPane(canvas);
         pack();
 
         setVisible(true);
         setSize(cavasWidth, cavasHeight);
+        // 关闭退出程序
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // resize
         setResizable(false);
     }
 
@@ -31,7 +36,22 @@ public class AlgoFrame extends JFrame {
 
         @Override
         protected void paintComponent(Graphics g) {
-            g.drawOval(50, 75, 300, 300);
+            super.paintComponent(g);
+
+            Graphics2D g2d = (Graphics2D) g;
+
+            // 设置笔画宽度
+            int strkeWidth = 10;
+            g2d.setStroke(new BasicStroke(strkeWidth));
+            g2d.setColor(Color.RED);
+            // 设置一个圆
+            Ellipse2D circle = new Ellipse2D.Double(50, 50, 300, 300);
+
+            g2d.draw(circle);
+
+            g2d.setColor(Color.GREEN);
+            circle = new Ellipse2D.Double(50, 50, 300, 300);
+            g2d.fill(circle);
         }
 
         @Override
