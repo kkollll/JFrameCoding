@@ -33,9 +33,11 @@ public class AlgoFrame extends JFrame {
     }
 
     private Circle[] circles;
-    public void render(Circle[] circles) {
+    public void render(Circle[] circles, boolean isAnimated) {
         this.circles = circles;
-        repaint();
+        if (isAnimated) {
+            repaint();
+        }
     }
 
     private class AlgoCanvas extends JPanel {
