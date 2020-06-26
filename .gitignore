@@ -4,5 +4,6 @@
 !/MoneyProblem
 !/GetPi
 !/Pi-Estimation-Without-Rendering
+!/Three-Gates-Problem
 *.iml
 !*/src
