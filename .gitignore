@@ -3,5 +3,6 @@
 !/Template
 !/MoneyProblem
 !/GetPi
+!/Pi-Estimation-Without-Rendering
 *.iml
 !*/src
