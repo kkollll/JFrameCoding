@@ -12,10 +12,10 @@ public class AlgoVisualizer {
     // 视图
     private AlgoFrame frame;
 
-    public AlgoVisualizer(int sceneWidth, int sceneHeight, int N, int randomBounds) {
+    public AlgoVisualizer(int sceneWidth, int sceneHeight, int N, int randomBounds,InsertSortData.Type type) {
 
         // 初始化数据
-        data = new InsertSortData(N, randomBounds);
+        data = new InsertSortData(N, randomBounds, type);
 
         // 初始化视图
         EventQueue.invokeLater(() -> {
@@ -32,10 +32,30 @@ public class AlgoVisualizer {
         int index = 1;
         setData(0, -1);
         while (index < data.N()) {
-            setData(index, index);
-            InsertSort(data, index++, index);
+            setData(index - 1, index);
+//            insertSort(data, index++, index);
+            //二分法
+            rank(data, index++);
+            data.t = -1;
         }
         setData(data.N(), -1);
+    }
+
+    private void rank(InsertSortData data, int index) {
+        int l = 0;
+        int h = index - 1;
+        while (l <= h) {
+            int mid = (l + h) / 2;
+            if (data.get(index) <= data.get(mid)) {
+                h = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        for (int i = index; i > l; i--) {
+            data.swap(i, i - 1);
+            setData(index + 1, i);
+        }
     }
 
     public void setData(int orderedIndex, int currentIndex) {
@@ -45,15 +65,15 @@ public class AlgoVisualizer {
         AlgoVisHelper.pause(DELAY);
     }
 
-    private InsertSortData InsertSort(InsertSortData data, int index, int orderedIndex) {
+    private InsertSortData insertSort(InsertSortData data, int index, int orderedIndex) {
         if (index == 0) {
             return data;
         }
         if (data.get(index) < data.get(index - 1)) {
             data.swap(index, index - 1);
-            setData(orderedIndex + 1, index - 1);
+            setData(orderedIndex, index - 1);
         }
-        return InsertSort(data, index - 1, orderedIndex);
+        return insertSort(data, index - 1, orderedIndex);
     }
 
     // TODO: 根据情况决定是否实现键盘鼠标等交互事件监听器类
@@ -71,6 +91,6 @@ public class AlgoVisualizer {
         int randomBounds = 500;
 
         // TODO: 根据需要设置其他参数，初始化visualizer
-        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBounds);
+        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBounds, InsertSortData.Type.NearlyOrdered);
     }
 }
