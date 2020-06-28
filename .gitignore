@@ -8,5 +8,6 @@
 !/WinningPrize
 !/Selection-Sort-Visualization
 !/Insert-Sort-Visualization
+!/Merge-Sort-Visualization
 *.iml
 !*/src
