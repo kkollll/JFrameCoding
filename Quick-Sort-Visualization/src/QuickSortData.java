@@ -4,7 +4,7 @@ public class QuickSortData {
 
 
     public Comparable[] numbers;
-    public int l, r, curPivot, curElement;
+    public int l, r, curPivot, curL, curR;
     public boolean[] fixedPivot;
 
     public QuickSortData(int N, int randomBound, Type dataType) {
@@ -24,7 +24,7 @@ public class QuickSortData {
             numbers[i] = (int) (Math.random() * (rBound - lBound + 1)) + lBound;
             fixedPivot[i] = false;
         }
-        if (dataType == Type.Default) {
+        if (dataType == Type.NearlyOrdered) {
             Arrays.sort(numbers);
         }
     }
