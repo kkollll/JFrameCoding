@@ -30,9 +30,9 @@ public class AlgoVisualizer {
     private void run() {
 
         frame.render(data);
-        setData(-1,-1,-1,-1,-1);
+        setData(-1, -1, -1, -1, -1);
         quickSort(0, data.N() - 1);
-        setData(-1,-1,-1,-1,-1);
+        setData(-1, -1, -1, -1, -1);
     }
 
     private void quickSort(int l, int r) {
@@ -41,10 +41,10 @@ public class AlgoVisualizer {
             return;
         }
         if (l == r) {
-            setData(l,r,l,-1,-1);
+            setData(l, r, l, -1, -1);
             return;
         }
-        setData(l,r,-1,-1,-1);
+        setData(l, r, -1, -1, -1);
         int p = partition(l, r);
         quickSort(l, p - 1);
         quickSort(p + 1, r);
@@ -52,19 +52,22 @@ public class AlgoVisualizer {
 
     private int partition(int l, int r) {
 
+        int p = (int) (Math.random() * (r - l + 1)) + l;
+        setData(l, r, -1, p, -1);
+        swap(l, p);
         Comparable v = data.get(l);
-        setData(l,r,-1,l,-1);
+        setData(l, r, -1, l, -1);
         int j = l;
         for (int i = l + 1; i <= r; i++) {
-            setData(l,r,-1,l,i);
+            setData(l, r, -1, l, i);
             if (less(data.get(i), v)) {
                 j++;
                 swap(i, j);
-                setData(l,r,-1,l,i);
+                setData(l, r, -1, l, i);
             }
         }
         swap(l, j);
-        setData(l,r,j,-1,-1);
+        setData(l, r, j, -1, -1);
         return j;
     }
 
@@ -99,6 +102,6 @@ public class AlgoVisualizer {
         int N = 100;
         int randomBound = 800;
 
-        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBound, Type.NearlyOrdered);
+        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBound, Type.Identical);
     }
 }

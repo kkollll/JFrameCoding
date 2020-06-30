@@ -12,8 +12,16 @@ public class QuickSortData {
         numbers = new Comparable[N];
         fixedPivot = new boolean[N];
 
+        int lBound = 1;
+        int rBound = randomBound;
+        if (dataType == Type.Identical) {
+            int avgNum = (rBound - lBound) >> 1;
+            lBound = avgNum;
+            rBound = avgNum;
+        }
+
         for (int i = 0; i < N; i++) {
-            numbers[i] = (int) (Math.random() * randomBound) + 1;
+            numbers[i] = (int) (Math.random() * (rBound - lBound + 1)) + lBound;
             fixedPivot[i] = false;
         }
         if (dataType == Type.Default) {

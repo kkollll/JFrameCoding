@@ -1,5 +1,6 @@
 public enum Type {
 
         Default,
-        NearlyOrdered
+        NearlyOrdered,
+        Identical
 }
