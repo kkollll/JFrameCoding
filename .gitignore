@@ -10,5 +10,6 @@
 !/Insert-Sort-Visualization
 !/Merge-Sort-Visualization
 !/Quick-Sort-Visualization
+!/Heap-Sort-Visualization
 *.iml
 !*/src
