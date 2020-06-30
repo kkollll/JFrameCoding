@@ -32,15 +32,15 @@ public class AlgoVisualizer {
 
         setData(-1, -1, -1);
         aux = new Comparable[data.N()];
-        mergeSort(0, data.N() - 1);
+//        mergeSort(0, data.N() - 1);
         // 自底向上归并
-//        mergeSortBU(data.N() - 1);
+        mergeSortBU(data.N() - 1);
         setData(0, data.N() - 1, data.N() - 1);
     }
 
     private void mergeSortBU(int n) {
 
-        for (int sz = 1; sz <= n; sz += sz) {
+        for (int sz = 1; sz <= n; sz = 2 * sz) {
 
             for (int i = 0; i + sz <= n; i += sz * 2) {
                 // 对 arr[i...i + sz - 1] 和 arr[i + sz....i + 2 * sz - 1]进行归并
