@@ -29,7 +29,6 @@ public class AlgoVisualizer {
     // 动画逻辑
     private void run() {
 
-        frame.render(data);
         setData(-1, -1, -1, -1, -1, -1);
         quickSort(0, data.N() - 1);
         setData(-1, -1, -1, -1, -1, -1);
@@ -44,52 +43,37 @@ public class AlgoVisualizer {
             setData(l, r, l, -1, -1, -1);
             return;
         }
-        setData(l, r, -1, -1, -1, -1);
-        int p = partition(l, r);
-        quickSort(l, p - 1);
-        quickSort(p + 1, r);
-    }
 
-    private int partition(int l, int r) {
-
-        int p = (int) (Math.random() * (r - l + 1)) + l;
+        int p = (int) (Math.random() * (r - l + 1) + l);
         setData(l, r, -1, p, -1, -1);
         swap(l, p);
         Comparable v = data.get(l);
         setData(l, r, -1, l, -1, -1);
 
-        int i = l + 1, j = r;
-        setData(l, r, -1, l, i, j);
-        while (true) {
-            while (i <= r && less(data.get(i), v)) {
+        // 三路快排partition
+        int lt = l;
+        int i = l + 1;
+        int gt = r + 1;
+        setData(l, r, -1, l, lt, gt);
+        while (i < gt) {
+            if (less(data.get(i), v)) {
+                lt++;
+                swap(i, lt);
                 i++;
-                setData(l, r, -1, l, i, j);
+            } else if (less(v, data.get(i))) {
+                gt--;
+                swap(gt, i);
+            } else {
+                i++;
             }
-
-            while (j >= l + 1 && less(v, data.get(j))) {
-                j--;
-                setData(l, r, -1, l, i, j);
-            }
-
-            if (i > j) {
-                break;
-            }
-            if (equal(data.get(i),data.get(j))) {
-                swap(i, j);
-            }
-            i++;
-            j--;
-            setData(l, r, -1, l, i, j);
+            setData(l, r, -1, l, i, gt);
         }
-        if (equal(data.get(l),data.get(j))) {
-            swap(l, j);
-        }
-        setData(l, r, j, l, i, j);
-        return j;
-    }
 
-    private boolean equal(Comparable i, Comparable j) {
-        return i.compareTo(j) != 0;
+        swap(l, lt);
+        setData(l, r, lt, -1, -1, -1);
+
+        quickSort(l, lt - 1);
+        quickSort(gt, r);
     }
 
 
@@ -109,12 +93,17 @@ public class AlgoVisualizer {
         data.r = r;
         if (fixedPivot != -1) {
             data.fixedPivot[fixedPivot] = true;
+            int i = fixedPivot;
+            while (i < data.N() && data.get(i).compareTo(data.get(fixedPivot)) == 0) {
+                data.fixedPivot[i] = true;
+                i++;
+            }
         }
         data.curL = curL;
         data.curR = curR;
         data.curPivot = curPivot;
 
-        frame.repaint();
+        frame.render(data);
         AlgoVisHelper.pause(DELAY);
     }
 
@@ -125,6 +114,6 @@ public class AlgoVisualizer {
         int N = 100;
         int randomBound = 800;
 
-        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBound, Type.Default);
+        AlgoVisualizer visualizer = new AlgoVisualizer(sceneWidth, sceneHeight, N, randomBound, Type.NearlyOrdered);
     }
 }
